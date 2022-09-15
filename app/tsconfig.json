@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "esModuleInterop": true,
+    "module": "none",
+    "outDir": "build",
+    "strict": true,
+    "noEmitOnError": true
+  }
+}
