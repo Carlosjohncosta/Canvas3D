@@ -1,10 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "esModuleInterop": true,
-    "module": "none",
-    "outDir": "build",
+    "out": "app_files/build/Canvas3d.js",
     "strict": true,
-    "noEmitOnError": true
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "alwaysStrict": true,
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "allowUnreachableCode": false,
+    "sourceMap":  true,
+    "removeComments": true,
+    "target":"es5",
   }
 }
