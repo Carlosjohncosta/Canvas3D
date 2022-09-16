@@ -1,29 +1,27 @@
 import * as Canvas3D from "./Canvas3D.js";
 import * as Models from "./Models.js";
-
 window.onload = function () {
-    const canvas3D = new Canvas3D.Scene(window.innerWidth, window.innerHeight);
-    const cube = new Models.Cube([0, 0, 10], 5);
+    var canvas3D = new Canvas3D.Scene(window.innerWidth, window.innerHeight);
+    var cube = new Models.Cube([0, 0, 10], 5);
     canvas3D.models.push(cube);
-    const keysPressed: string[] = [];
-
-    setInterval(() => {
+    var keysPressed = [];
+    setInterval(function () {
         canvas3D.clear();
         canvas3D.renderAll();
         keyHandler();
     }, 0);
-    document.addEventListener("keydown", (e) => {
-        if (keysPressed.indexOf(e.key) === -1) keysPressed.push(e.key);
+    document.addEventListener("keydown", function (e) {
+        if (keysPressed.indexOf(e.key) === -1)
+            keysPressed.push(e.key);
     });
-    document.addEventListener("keyup", (e) => {
+    document.addEventListener("keyup", function (e) {
         if (keysPressed.indexOf(e.key) !== -1)
             keysPressed.splice(keysPressed.indexOf(e.key), 1);
     });
-
-    function keyHandler(): void {
-        const ammount = 0.5;
-        keysPressed.forEach((key) => {
-            canvas3D.models.forEach((model) => {
+    function keyHandler() {
+        var ammount = 0.5;
+        keysPressed.forEach(function (key) {
+            canvas3D.models.forEach(function (model) {
                 switch (key) {
                     case "ArrowUp":
                         model.moveCenter([0, ammount, 0]);
