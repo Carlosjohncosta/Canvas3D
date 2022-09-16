@@ -1,21 +1,12 @@
 namespace Canvas3D {
-    export class Point {
-        private _coords: number[];
-        constructor(x: number, y: number, z: number) {
-            this._coords = [x, y, z];
-        }
-        get coords() {
-            return this._coords;
-        }
-    }
-
     export class RenderContext {
         constructor(public viewPoint: number, public focalPoint: number) {}
     }
 
     export class Scene {
         private readonly _ctx: CanvasRenderingContext2D;
-        renderContext = new RenderContext(0, -3);
+        renderContext = new RenderContext(0, -8);
+        models: Models.Model[] = [];
 
         constructor(
             private _canvasWidth: number,
@@ -40,22 +31,35 @@ namespace Canvas3D {
             }
         }
 
-        drawModel(model: Models.Model) {
-            const points: number[][] = [];
-            model.verteces.forEach((vertex) => {
-                const ratio =
-                    (this.renderContext.viewPoint - this.renderContext.focalPoint) /
-                    (vertex.coords[2] - this.renderContext.focalPoint);
+        renderAll(): void {
+            this.models.forEach((model) => { 
+                const points: [number, number][] = []     
+                model.verteces.forEach((vertex) => {
+                    const ratio =
+                        (this.renderContext.viewPoint - this.renderContext.focalPoint) /
+                        (vertex[2] - this.renderContext.focalPoint);
 
-                points.push([100 * ratio * vertex.coords[0], 100 * ratio * vertex.coords[1]]);
-            });
-            points.forEach((point1) => {
-                points.forEach((point2) => {
-                    this._ctx.moveTo(point1[0], point1[1]);
-                    this._ctx.lineTo(point2[0], point2[1]);
-                    this._ctx.stroke();
+                    points.push([100 * ratio * vertex[0], 100 * ratio * -vertex[1]]);
+                });
+                points.forEach((point1) => {
+                    points.forEach((point2) => {
+                        this._ctx.moveTo(point1[0], point1[1]);
+                        this._ctx.lineTo(point2[0], point2[1]);
+                        this._ctx.stroke();
+                    });
                 });
             });
         }
-    }
+
+        clear(): void {
+            this._ctx.beginPath();
+            this._ctx.fillStyle = "white";
+            this._ctx.fillRect(
+                -(this._canvasWidth / 2),
+                -(this._canvasHeight / 2),
+                this._canvasWidth,
+                this._canvasHeight
+            );
+        }
+  }
 }
